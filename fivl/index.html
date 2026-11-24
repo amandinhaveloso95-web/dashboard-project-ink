@@ -192,7 +192,7 @@ return{grid:'grid-template-columns:1fr 1.25fr;grid-template-rows:auto 1fr',html:
 P[2]=()=>{const act=active(),late=lateOnes(),dl=projs().filter(p=>p.stage===4),ontime=dl.filter(p=>p.late===0).length;
 const f=act.filter(p=>S.cause===null||p.cause===CAUSES[S.cause]);const avg=late.length?late.reduce((a,p)=>a+p.late,0)/late.length:0;
 const lb=[...late].sort((a,b)=>b.late-a.late).map(p=>({l:p.n,key:p.id,v:p.late,t:p.late+' d',cls:p.late>=9?'st':'',sel:S.psel===p.id,dim:S.cause!==null&&p.cause!==CAUSES[S.cause],tip:`${p.n}: ${p.late} days late, ${p.cause}, ${DES[p.des]}`}));
-const cb=CAUSES.map((c,i)=>({l:c,key:i,v:late.filter(p=>p.cause===c).length,sel:S.cause===i,dim:S.cause!==null&&S.cause!==i})).map(x=>({...x,t:x.v+' projects',tip:'Click to filter the table and the bars by '+x.l}));
+const cb=CAUSES.map((c,i)=>({l:c,key:i,v:late.filter(p=>p.cause===c).length,sel:S.cause===i,dim:S.cause!==null&&S.cause!==i})).map(x=>({...x,t:x.v+(x.v===1?' project':' projects'),tip:'Click to filter the table and the bars by '+x.l}));
 const rw=[...act].sort((a,b)=>b.rounds-a.rounds).slice(0,6).map(p=>({l:p.n,key:p.id,v:p.rounds,t:p.rounds+' rounds',cls:p.rounds>=3?'st':'g',tip:p.n+': '+p.rounds+' rounds of changes'}));
 return{grid:'grid-template-columns:1.1fr 1fr;grid-template-rows:auto 1fr 1fr',html:
 `<div class="kp" style="grid-column:1/3;grid-template-columns:repeat(4,1fr)">${kpi('Late projects',late.length,'of '+act.length+' active',{alert:late.length>3})}${kpi('Average delay',avg.toFixed(1)+' d',late.length?'worst: '+Math.max(...late.map(p=>p.late))+' days':'none late')}${kpi('Rounds of changes',act.reduce((a,p)=>a+p.rounds,0),'on active projects')}${kpi('Delivered on time',ontime+' of '+dl.length,'projects already closed')}</div>
@@ -217,7 +217,7 @@ return{grid:'grid-template-columns:.85fr 1.45fr;grid-template-rows:auto 1.15fr 1
 P[4]=()=>{const ps=projs(),tb=ps.reduce((a,p)=>a+p.bud,0),ts=ps.reduce((a,p)=>a+p.spent,0),ov=ps.filter(p=>p.spent>p.bud);
 const srt=[...ps].sort((a,b)=>b.spent/b.bud-a.spent/a.bud),mx=Math.max(...ps.map(p=>Math.max(p.bud,p.spent)));
 const bl=srt.map(p=>({l:p.n,key:p.id,v:p.spent,t:usd(p.spent),mark:p.bud,cls:p.spent>p.bud?'st':p.stage<2?'g':'',sel:S.psel===p.id,tip:`${p.n}: ${usd(p.spent)} spent of ${usd(p.bud)} (${Math.round(p.spent/p.bud*100)}%), ${STAGES[p.stage]}`}));
-const sb=SUP.map((s,k)=>({l:s,key:k,v:ps.filter(p=>p.sup===k).reduce((a,p)=>a+p.spent,0)})).filter(x=>x.v).sort((a,b)=>b.v-a.v).map(x=>({...x,t:usd(x.v),cls:'g',tip:x.l+': spent on '+ps.filter(p=>p.sup===x.key).length+' projects'}));
+const sb=SUP.map((s,k)=>({l:s,key:k,v:ps.filter(p=>p.sup===k).reduce((a,p)=>a+p.spent,0)})).filter(x=>x.v).sort((a,b)=>b.v-a.v).map(x=>({...x,t:usd(x.v),cls:'g',tip:x.l+': spent on '+ps.filter(p=>p.sup===x.key).length+(ps.filter(p=>p.sup===x.key).length===1?' project':' projects')}));
 const rr=[...ps].sort((a,b)=>b.rounds-a.rounds).slice(0,6).map(p=>({l:p.n,key:p.id,v:p.rounds,t:p.rounds+' rounds',cls:p.rounds>=3?'st':'g',tip:p.n+': '+p.rounds+' rounds of changes'}));
 return{grid:'grid-template-columns:1.35fr 1fr;grid-template-rows:auto 1fr 1fr',html:
 `<div class="kp" style="grid-column:1/3;grid-template-columns:repeat(4,1fr)">${kpi('Budget, all projects',usd(tb),ps.length+' projects')}${kpi('Spent so far',usd(ts),Math.round(ts/tb*100)+'% of budget')}${kpi('Over budget',ov.length,ov.length?usd(ov.reduce((a,p)=>a+p.spent-p.bud,0))+' above plan':'none',{alert:ov.length>3})}${kpi('Rounds of changes',ps.reduce((a,p)=>a+p.rounds,0),'across all projects')}</div>
