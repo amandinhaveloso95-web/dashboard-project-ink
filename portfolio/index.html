@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboards by Amanda Moraes (fictional data)</title>
+<meta name="description" content="Interactive dashboards rebuilt with fictional data from the work Amanda Moraes did in operations, project management and business intelligence.">
+<style>
+:root{--ink:#0a0a0a;--paper:#f5f5f3;--card:#fff;--g2:#6b6b67;--g3:#b9b9b4;--y:#f6d55c}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--paper)}
+body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--ink);background:var(--paper);line-height:1.45;padding:0 16px}
+main{max-width:980px;margin:0 auto;padding:48px 0 32px}
+.kick{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--g2)}
+h1{font-size:clamp(34px,7vw,64px);line-height:1;letter-spacing:-.04em;margin:14px 0 18px}
+h1 u{text-decoration:none;background:linear-gradient(transparent 58%,var(--y) 58% 94%,transparent 94%);padding:0 6px;margin:0 -6px}
+.lead{font-size:18px;max-width:640px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:18px;margin-top:36px}
+.card{background:var(--card);border:2px solid var(--ink);padding:22px;display:flex;flex-direction:column;gap:12px}
+.card .tag{align-self:flex-start;background:var(--y);font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:3px 10px;font-weight:700}
+.card h2{font-size:26px;letter-spacing:-.02em;line-height:1.1}
+.card p{color:#2a2a28}
+.card ol{padding-left:20px;display:grid;gap:4px}
+.card a.go{margin-top:auto;display:inline-block;background:var(--ink);color:var(--paper);text-decoration:none;font-weight:700;padding:12px 16px;text-align:center}
+.card a.go:hover,.card a.go:focus-visible{background:var(--y);color:var(--ink);outline:2px solid var(--ink)}
+.open{margin-top:36px;border-left:6px solid var(--y);padding:6px 0 6px 16px;font-size:18px}
+footer{margin-top:40px;padding:18px 0;border-top:2px solid var(--ink);font-size:14px;color:#2a2a28}
+footer b{color:var(--ink)}
+@media (prefers-color-scheme:dark){
+:root{--ink:#f5f5f3;--paper:#0a0a0a;--card:#141413;--g2:#b9b9b4}
+.card .tag{color:#0a0a0a}.card a.go{color:#0a0a0a}.card a.go:hover,.card a.go:focus-visible{color:#0a0a0a}
+.card p{color:#e6e6e1}footer{color:#e6e6e1}
+h1 u{background:linear-gradient(transparent 58%,#8a7424 58% 94%,transparent 94%)}
+}
+</style>
+</head>
+<body>
+<main>
+  <div class="kick">Portfolio &middot; fictional data</div>
+  <h1>Dashboards that answer <u>one question</u> per page.</h1>
+  <p class="lead">Each dashboard below is clickable. They are rebuilt with made-up numbers from the work I did in operations, project management and business intelligence. Click a card, a bar or a row to filter, and click again to clear.</p>
+
+  <div class="grid">
+    <section class="card" aria-labelledby="t1">
+      <span class="tag">Clothing brand</span>
+      <h2 id="t1">Owner view: brand operations</h2>
+      <p>Five pages for the owner of a U.S. clothing brand: from sales to suppliers to stock.</p>
+      <ol>
+        <li>How is the business today?</li>
+        <li>Who has room?</li>
+        <li>Which supplier for this job?</li>
+        <li>Is each project making money?</li>
+        <li>What is stuck, and what went wrong?</li>
+      </ol>
+      <a class="go" href="../">Open the dashboard</a>
+    </section>
+
+    <section class="card" aria-labelledby="t2">
+      <span class="tag">Design operations</span>
+      <h2 id="t2">Design ops view: projects and ads</h2>
+      <p>Five pages on capacity, delays, ad returns and project cost, with items that need attention in yellow.</p>
+      <ol>
+        <li>How is the operation today?</li>
+        <li>Who has room?</li>
+        <li>What is late?</li>
+        <li>Which ad sells more?</li>
+        <li>What does each project cost?</li>
+      </ol>
+      <a class="go" href="../fivl/">Open the dashboard</a>
+    </section>
+  </div>
+
+  <p class="open"><b>Amanda Moraes.</b> Open to data and BI analyst roles. <a href="https://www.linkedin.com/in/amanda-moraes-312051438/">LinkedIn profile</a></p>
+
+  <footer><b>Fictional data.</b> I can't share company data. The structures show the work I did at Project Ink Media and FIVL Design Corp. Every number and name on these pages is made up.</footer>
+</main>
+</body>
+</html>
