@@ -1,9 +1,8 @@
-﻿# Owner view: clothing brand operations
+﻿# Interactive dashboards with fictional data
 
-An interactive dashboard with **fictional data**, rebuilt from the structure of dashboards I built for the owner of a U.S. clothing brand. Five pages, one question each: how is the business today, who has room, which supplier for this job, is each project making money, what is stuck.
+Dashboards rebuilt from the structure of the ones I built for the owners of U.S. clothing brands. Each page answers one question. No company data is shown: the numbers are made up with a fixed seed.
 
-Live version: https://amandinhaveloso95-web.github.io/dashboard-project-ink/
-
-No company data is shown. The numbers are made up with a fixed seed.
+- **Owner view: clothing brand operations** (sales, projects, suppliers, cost, stock): https://amandinhaveloso95-web.github.io/dashboard-project-ink/
+- **Design operations view: clothing brand** (capacity, delays, ads, project cost): https://amandinhaveloso95-web.github.io/dashboard-project-ink/fivl/
 
 Amanda Moraes

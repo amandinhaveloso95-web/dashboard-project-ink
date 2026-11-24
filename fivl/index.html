@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design operations view: clothing brand (fictional data)</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#0A0A0A;--paper:#F5F5F3;--card:#fff;--g1:#3a3a38;--g2:#6b6b67;--g3:#b9b9b4;--g4:#e6e6e1;--g5:#efefeb}
+html,body{height:100%;background:#dcdcd7;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--ink);overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1600px;height:900px;background:var(--paper);transform-origin:0 0;display:grid;grid-template-columns:264px 1fr;grid-template-rows:1fr 34px}
+.num{font-variant-numeric:tabular-nums}
+#nav{background:var(--ink);color:var(--paper);padding:22px 16px 12px;display:flex;flex-direction:column;gap:9px}
+#nav .brand{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#a9a9a4}
+#nav h1{font-size:23px;line-height:1.05;letter-spacing:-.02em;margin:5px 0 12px;font-weight:700}
+#nav h1 span{font-weight:300}
+.nv{border:1px solid #3a3a38;padding:11px 13px;cursor:pointer;transition:background .15s;display:grid;grid-template-columns:1fr auto;gap:2px 8px;align-items:end}
+.nv:hover{background:#1c1c1b}
+.nv.on{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.nv .q{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#a9a9a4;grid-column:1/3}
+.nv.on .q{color:var(--g2)}
+.nv .t{font-size:15px;font-weight:700;letter-spacing:-.01em}
+.nv .k{font-size:25px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.nv .s{font-size:11px;color:#a9a9a4;grid-column:1/3}
+.nv.on .s{color:var(--g2)}
+#nav .how{margin-top:auto;font-size:11px;line-height:1.4;color:#a9a9a4;border-top:1px solid #3a3a38;padding-top:9px}
+#main{padding:18px 24px 10px;display:flex;flex-direction:column;min-height:0}
+#top{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid var(--ink);padding-bottom:10px}
+#top .kick{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--g2)}
+#top h2{font-size:33px;letter-spacing:-.035em;line-height:1.05;font-weight:700;margin-top:3px}
+.slc{display:flex;gap:16px;align-items:flex-end}
+.sl label{display:block;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--g2);margin-bottom:4px}
+.chips{display:flex}
+.chip{font-size:12px;padding:6px 10px;border:1px solid var(--ink);margin-left:-1px;cursor:pointer;background:var(--card);user-select:none;white-space:nowrap}
+.chip:first-child{margin-left:0}
+.chip.on{background:var(--ink);color:var(--paper)}
+.chip:hover:not(.on){background:var(--g5)}
+#page{flex:1;min-height:0;display:grid;gap:12px;margin-top:12px}
+.card{background:var(--card);border:1px solid var(--g3);padding:13px 15px;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+.card h3{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;display:flex;justify-content:space-between;gap:10px;margin-bottom:9px}
+.card h3 em{font-style:normal;font-weight:400;color:var(--g2);letter-spacing:.04em;text-transform:none;font-size:11px}
+.kp{display:grid;gap:12px}
+.kpi{background:var(--card);border:1px solid var(--g3);padding:12px 15px;cursor:default;position:relative}
+.kpi.go{cursor:pointer}.kpi.go:hover{border-color:var(--ink)}
+.kpi .l{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--g2)}
+.kpi .v{font-size:38px;font-weight:700;letter-spacing:-.045em;line-height:1.05;margin-top:3px}
+.kpi .d{font-size:12px;color:var(--g1);margin-top:2px}
+.kpi.alert{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.kpi.alert .l,.kpi.alert .d{color:#c9c9c4}
+.kpi .ar{position:absolute;right:12px;top:10px;font-size:12px;color:var(--g2)}
+.rows{display:flex;flex-direction:column;flex:1;min-height:0;justify-content:space-between}
+.r{display:grid;align-items:center;gap:10px;font-size:13px;padding:3px 4px;cursor:pointer;border-left:3px solid transparent}
+.r:hover{background:var(--g5)}
+.r.sel{border-left-color:var(--ink);background:var(--g5);font-weight:700}
+.r.dim{opacity:.32}
+.tr{height:15px;background:var(--g5);position:relative}
+.b{position:absolute;left:0;top:0;bottom:0;background:var(--ink)}
+.b.g{background:var(--g3)}
+.b.st{background:repeating-linear-gradient(135deg,var(--ink) 0 4px,#fff 4px 8px);outline:1.5px solid var(--ink);outline-offset:-1.5px}
+.mk{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.rt{text-align:right}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{font-size:10px;letter-spacing:.12em;text-transform:uppercase;text-align:left;color:var(--g2);font-weight:700;padding:5px 7px;border-bottom:1.5px solid var(--ink);cursor:pointer;white-space:nowrap;user-select:none}
+th:hover{color:var(--ink)}
+td{padding:5px 7px;border-bottom:1px solid var(--g4);white-space:nowrap}
+tbody tr{cursor:pointer}tbody tr:hover{background:var(--g5)}
+tbody tr.sel{background:var(--ink);color:var(--paper)}
+tbody tr.sel .tr{background:#3a3a38}tbody tr.sel .b{background:var(--paper)}
+tbody tr.sel .b.st{background:repeating-linear-gradient(135deg,var(--paper) 0 4px,#0a0a0a 4px 8px);outline-color:var(--paper)}
+.tw{overflow:auto;flex:1;min-height:0}
+.tag{display:inline-block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:2px 6px;border:1px solid currentColor}
+.tag.k{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+tbody tr.sel .tag.k{background:var(--paper);color:var(--ink)}
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;flex:1}
+.st1{border:1px solid var(--g3);padding:10px 12px;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between}
+.st1:hover{border-color:var(--ink)}.st1.sel{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.st1.dim{opacity:.35}
+.st1 .n{font-size:44px;font-weight:700;letter-spacing:-.05em;line-height:1}
+.st1 .t{font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.st1 .x{font-size:11.5px;color:var(--g2)}.st1.sel .x{color:#c9c9c4}
+.cmp{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;flex:1;min-height:0}
+.cm{border:1px solid var(--g3);padding:10px 12px;display:flex;flex-direction:column;gap:5px}
+.cm.empty{border-style:dashed;align-items:center;justify-content:center;color:var(--g2);font-size:12.5px;text-align:center}
+.cm b.nm{font-size:16px;letter-spacing:-.02em}
+.cm .ln{display:flex;justify-content:space-between;font-size:12.5px;border-bottom:1px solid var(--g4);padding:3px 0}
+.cm .ln i{font-style:normal;color:var(--g2)}
+.cm .ln .best{background:var(--ink);color:var(--paper);padding:0 6px}
+.note{font-size:11.5px;color:var(--g2);line-height:1.4;margin-top:7px}
+.todo{display:flex;flex-direction:column;gap:6px;flex:1;justify-content:space-between}
+.td1{display:grid;grid-template-columns:22px 1fr auto;gap:10px;align-items:center;font-size:13px;border-bottom:1px solid var(--g4);padding-bottom:6px;cursor:pointer}
+.td1:hover b{text-decoration:underline}
+.td1 .i{width:22px;height:22px;background:var(--ink);color:var(--paper);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.td1 span{color:var(--g2);font-size:12px}
+svg text{font-family:inherit}
+#foot{grid-column:1/3;background:var(--ink);color:var(--paper);display:flex;justify-content:space-between;align-items:center;padding:0 22px;font-size:12px}
+#foot b{font-weight:700;letter-spacing:.02em}
+#tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--paper);font-size:12px;padding:6px 9px;display:none;z-index:9;max-width:260px;line-height:1.35}
+</style>
+</head>
+<body>
+<div id="stage">
+  <aside id="nav"></aside>
+  <main id="main">
+    <div id="top"></div>
+    <div id="page"></div>
+  </main>
+  <div id="foot"><span><b>Fictional data.</b> I can't share company data. The structure shows the work I did at FIVL Design Corp: the questions, the indicators and who decided what.</span><span><b>Amanda Moraes</b></span></div>
+</div>
+<div id="tip"></div>
+<script>
+/* ---------- fictional data, fixed seed ---------- */
+function rng(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const R=rng(20261125);
+const LINES=['Tees','Hoodies','Caps','Jackets','Accessories'];
+const MONTHS=['Nov','Dec','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct'];
+const BASE=[22000,26000,8000,14000,6000],SEAS=[1.08,1.22,.8,.72,.84,.93,1.0,1.08,1.14,1.02,.94,1.06];
+const SALES=MONTHS.map((m,i)=>LINES.map((l,j)=>Math.round(BASE[j]*SEAS[i]*(.9+R()*.2)/100)*100));
+const ADM=MONTHS.map((m,i)=>{const s=SALES[i].reduce((a,b)=>a+b,0);const adSales=Math.round(s*(.38+R()*.08)/100)*100;const roas=2.8+R()*1.3;const adSpend=Math.round(adSales/roas/100)*100;return{adSales,adSpend,roas:adSales/adSpend}});
+const STAGES=['Brief','Design','Review','Production','Delivered'];
+const DES=['Designer A','Designer B','Designer C','Designer D','Designer E','Designer F','Designer G','Designer H'];
+const LOAD=[80,130,95,45,115,70,30,90];
+const SUP=['Atlas Print','Brightline Studio','Cobalt Embroidery','Dune Textiles'];
+const CAUSES=['Rework','Waiting on approval','Supplier delay','Brief changed'];
+const PROJ=[
+['Spring hoodie drop',1,1,2,6,24000,26900,3,0,0],['Cap restock',2,3,1,0,6000,2400,1,-1,1],['Jacket launch',3,4,3,9,32000,35800,2,2,2],
+['Tee bundle',0,0,1,0,15000,6100,1,-1,0],['Heavyweight hoodie',1,6,0,0,21000,1900,0,-1,3],['Gift set',4,5,2,0,5000,3100,2,-1,1],
+['Festival capsule',0,7,3,4,28000,24100,1,1,0],['Embroidered crewneck',1,2,2,12,19000,21400,4,3,2],['Beanie colorways',2,3,1,3,4500,3300,2,0,1],
+['Coach jacket',3,4,0,0,26000,2400,0,-1,2],['Logo tee',0,0,4,0,12000,11500,1,-1,0],['Zip hoodie',1,1,4,0,17000,16100,2,-1,3],
+['Tote bag',4,5,4,0,4000,3700,1,-1,1],['Dad cap',2,6,4,0,6000,5400,0,-1,1],['Varsity jacket',3,7,4,5,30000,31800,3,2,2],['Hoodie v1',1,2,4,0,20000,18800,1,-1,3]
+].map((p,i)=>({id:i,n:p[0],line:p[1],des:p[2],stage:p[3],late:p[4],bud:p[5],spent:p[6],rounds:p[7],cause:p[8]<0?null:CAUSES[p[8]],sup:p[9]}));
+const AOV=[32,68,28,120,24];
+const ADS=[
+['Spring hoodie drop','A',1,4800,19200],['Spring hoodie drop','B',1,5100,12400],['Spring hoodie drop','C',1,4300,21700],
+['Cap restock','A',2,1500,4100],['Cap restock','B',2,1700,7600],
+['Jacket launch','A',3,6200,17900],['Jacket launch','B',3,5800,24300],['Jacket launch','C',3,6400,15100],
+['Tee bundle','A',0,3900,11700],['Tee bundle','B',0,4200,18900],
+['Gift set','A',4,2100,5900],['Gift set','B',4,2300,8300]
+].map((a,i)=>({id:i,c:a[0],v:a[1],line:a[2],spend:a[3],sales:a[4],orders:Math.round(a[4]/AOV[a[2]]),roas:a[4]/a[3],ctr:+(.8+R()*2.3).toFixed(1)}));
+const CAMPAIGNS_LIVE=62;
+/* ---------- state ---------- */
+const S={page:0,line:null,period:12,stage:null,des:null,cause:null,cmp:[],sort:{},psel:null};
+const $=q=>document.querySelector(q);
+const usd=v=>v>=1e6?'$'+(v/1e6).toFixed(2)+'M':v>=1e3?'$'+(v/1e3).toFixed(v>=1e5?0:1)+'K':'$'+Math.round(v);
+const pct=v=>v.toFixed(1)+'%';
+const inLine=j=>S.line===null||S.line===j;
+const mIdx=()=>MONTHS.map((m,i)=>i).slice(12-S.period);
+const mSales=i=>LINES.reduce((a,l,j)=>a+(inLine(j)?SALES[i][j]:0),0);
+const projs=()=>PROJ.filter(p=>inLine(p.line));
+const active=()=>projs().filter(p=>p.stage<4);
+const lateOnes=()=>active().filter(p=>p.late>0);
+const nav=[
+{t:'Overview',q:'How is the operation today?',k:()=>usd(mSales(11)),s:()=>'sales in '+MONTHS[11]},
+{t:'Capacity',q:'Who has room?',k:()=>LOAD.filter(v=>v<=60).length,s:()=>'of '+DES.length+' designers with room'},
+{t:'Delays',q:'What is late?',k:()=>lateOnes().length,s:()=>'late of '+active().length+' active projects'},
+{t:'Ads',q:'Which ad sells more?',k:()=>{const f=ADS.filter(a=>inLine(a.line));return f.length?Math.max(...f.map(a=>a.roas)).toFixed(1)+'x':'-'},s:()=>'return per $1, best ad'},
+{t:'Cost',q:'What does each project cost?',k:()=>projs().filter(p=>p.spent>p.bud).length,s:()=>'projects over budget'}];
+/* ---------- helpers ---------- */
+function bars(items,o={}){const max=o.max||Math.max(...items.map(i=>i.v),1);return '<div class="rows">'+items.map(i=>`<div class="r ${i.sel?'sel':''} ${i.dim?'dim':''}" style="grid-template-columns:${o.lw||120}px 1fr ${o.vw||64}px" data-a="${o.a||''}" data-v="${i.key??''}" data-tip="${i.tip||''}"><span>${i.l}</span><div class="tr"><div class="b ${i.cls||''}" style="width:${Math.min(100,i.v/max*100)}%"></div>${i.mark!=null?`<div class="mk" style="left:${Math.min(100,i.mark/max*100)}%"></div>`:''}</div><span class="rt num">${i.t}</span></div>`).join('')+'</div>'}
+function cols(vals,line,labels,fmtA,fmtB){const W=760,H=250,pl=44,pb=22,pt=14,n=vals.length,max=Math.max(...vals)*1.12,bw=(W-pl-10)/n;const y=v=>pt+(H-pt-pb)*(1-v/max);const lmax=Math.max(...line)+.4,lmin=Math.min(...line)-.4;const ly=v=>pt+(H-pt-pb)*(1-(v-lmin)/(lmax-lmin));
+let s=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;flex:1;min-height:0">`;
+[0,.5,1].forEach(f=>{const v=max*f/1.12;s+=`<line x1="${pl}" x2="${W}" y1="${y(v)}" y2="${y(v)}" stroke="#e6e6e1"/><text x="${pl-6}" y="${y(v)+4}" font-size="11" text-anchor="end" fill="#6b6b67">${usd(v)}</text>`});
+vals.forEach((v,i)=>{const x=pl+i*bw+bw*.16;s+=`<rect x="${x}" y="${y(v)}" width="${bw*.68}" height="${H-pb-y(v)}" fill="${i===n-1?'#0A0A0A':'#b9b9b4'}" data-tip="${labels[i]}: ${fmtA(v)} sales, ${fmtB(line[i])} return on ads"/><text x="${x+bw*.34}" y="${H-6}" font-size="11" text-anchor="middle" fill="#3a3a38">${labels[i]}</text>`});
+s+=`<polyline fill="none" stroke="#0A0A0A" stroke-width="2" points="${line.map((v,i)=>(pl+i*bw+bw*.5)+','+ly(v)).join(' ')}"/>`;
+line.forEach((v,i)=>{s+=`<circle cx="${pl+i*bw+bw*.5}" cy="${ly(v)}" r="3.5" fill="#fff" stroke="#0A0A0A" stroke-width="2"/>`});
+s+=`<text x="${pl+(n-1)*bw+bw*.5}" y="${ly(line[n-1])-9}" font-size="12" font-weight="700" text-anchor="middle" stroke="#fff" stroke-width="4" paint-order="stroke">${fmtB(line[n-1])}</text>`;
+return s+'</svg>'}
+function tbl(id,cols,rows,o={}){const st=S.sort[id];if(st){rows=[...rows].sort((a,b)=>{const x=a._[st.c],y=b._[st.c];return(x<y?-1:x>y?1:0)*(st.d?1:-1)})}
+return `<div class="tw"><table><thead><tr>${cols.map((c,i)=>`<th data-a="sort" data-v="${id}|${i}">${c}${st&&st.c===i?(st.d?' ▲':' ▼'):''}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr class="${r.sel?'sel':''}" data-a="${o.a||''}" data-v="${r.key}">${r.c.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`}
+const mini=(v,max,cls)=>`<div class="tr" style="width:90px;display:inline-block;vertical-align:middle"><div class="b ${cls||''}" style="width:${Math.min(100,v/max*100)}%"></div></div>`;
+const kpi=(l,v,d,o={})=>`<div class="kpi ${o.alert?'alert':''} ${o.go!=null?'go':''}" ${o.go!=null?`data-a="page" data-v="${o.go}"`:''}><div class="l">${l}</div><div class="v num">${v}</div><div class="d">${d}</div>${o.go!=null?'<div class="ar">open →</div>':''}</div>`;
+/* ---------- pages ---------- */
+const P=[];
+P[0]=()=>{const ix=mIdx(),rev=ix.map(i=>mSales(i)),rt=ix.map(i=>ADM[i].roas);
+const cur=mSales(11),prev=mSales(10),act=active(),late=lateOnes(),over=projs().filter(p=>p.spent>p.bud);
+const byLine=LINES.map((l,j)=>({l,key:j,v:ix.reduce((a,i)=>a+SALES[i][j],0),sel:S.line===j,dim:S.line!==null&&S.line!==j})).map(x=>({...x,t:usd(x.v),tip:'Click to filter every page by '+x.l}));
+const lp=[...late].sort((a,b)=>b.late-a.late)[0],op=[...over].sort((a,b)=>(b.spent/b.bud)-(a.spent/a.bud))[0];
+const adsF=ADS.filter(a=>inLine(a.line)),wad=[...adsF].sort((a,b)=>a.roas-b.roas)[0],ol=DES.map((d,i)=>({d,v:LOAD[i]})).sort((a,b)=>b.v-a.v)[0];
+const todo=[];if(lp)todo.push([2,`<b>${lp.n}</b> is ${lp.late} days late`,STAGES[lp.stage]+', '+DES[lp.des]]);if(op)todo.push([4,`<b>${op.n}</b> is ${Math.round((op.spent/op.bud-1)*100)}% over budget`,usd(op.spent)+' of '+usd(op.bud)]);if(wad)todo.push([3,`<b>${wad.c}, ad ${wad.v}</b> returns only ${wad.roas.toFixed(1)}x`,usd(wad.spend)+' spent']);todo.push([1,`<b>${ol.d}</b> is at ${ol.v}% of capacity`,LOAD.filter(v=>v>100).length+' designers over capacity']);
+const rc=ADM[11].roas,rp=ADM[10].roas;
+return{grid:'grid-template-columns:1.55fr 1fr;grid-template-rows:auto 1fr 1fr',html:
+`<div class="kp" style="grid-column:1/3;grid-template-columns:repeat(5,1fr)">${kpi('Sales, '+MONTHS[11],usd(cur),(cur>=prev?'+':'')+pct((cur/prev-1)*100)+' vs '+MONTHS[10])}${kpi('Active projects',act.length,projs().filter(p=>p.stage===3).length+' in production',{go:1})}${kpi('Late projects',late.length,late.length?'worst: '+lp.late+' days':'none late',{go:2,alert:late.length>2})}${kpi('Campaigns live',CAMPAIGNS_LIVE,adsF.length+' ad versions compared',{go:3})}${kpi('Return per $1 of ads',rc.toFixed(1)+'x',(rc>=rp?'+':'')+(rc-rp).toFixed(1)+'x vs '+MONTHS[10])}</div>
+<div class="card" style="grid-row:2/4"><h3>Sales and ad return by month <em>bars: sales · line: sales per $1 of ads</em></h3>${cols(rev,rt,ix.map(i=>MONTHS[i]),usd,v=>v.toFixed(1)+'x')}</div>
+<div class="card"><h3>Sales by product line <em>click to filter</em></h3>${bars(byLine,{a:'line',lw:96})}</div>
+<div class="card"><h3>Needs a decision this week</h3><div class="todo">${todo.map(t=>`<div class="td1" data-a="page" data-v="${t[0]}"><div class="i">!</div><div>${t[1]}</div><span>${t[2]}</span></div>`).join('')}</div></div>`}};
+P[1]=()=>{const ps=projs(),f=ps.filter(p=>(S.stage===null||p.stage===S.stage)&&(S.des===null||p.des===S.des));
+const dl=DES.map((d,i)=>({l:d,key:i,v:LOAD[i],t:LOAD[i]+'%',cls:LOAD[i]>100?'st':'',mark:100,sel:S.des===i,dim:S.des!==null&&S.des!==i,tip:ps.filter(p=>p.des===i&&p.stage<4).length+' active projects. Click to see them.'}));
+const free=LOAD.filter(v=>v<=60).length,over=LOAD.filter(v=>v>100).length;
+return{grid:'grid-template-columns:1fr 1.25fr;grid-template-rows:auto 1fr',html:
+`<div class="card" style="grid-column:1/3"><h3>Pipeline by stage <em>click a stage to filter the table</em></h3><div class="pipe">${STAGES.map((s,i)=>{const a=ps.filter(p=>p.stage===i),l=a.filter(p=>p.late>0).length;return `<div class="st1 ${S.stage===i?'sel':''} ${S.stage!==null&&S.stage!==i?'dim':''}" data-a="stage" data-v="${i}"><div class="t">${i+1}. ${s}</div><div class="n num">${a.length}</div><div class="x">${i===4?'delivered':l?l+' late':'on schedule'}</div></div>`}).join('')}</div></div>
+<div class="card"><h3>Designer load this week <em>${free} with room · ${over} over capacity</em></h3>${bars(dl,{a:'des',max:140,lw:92,vw:50})}<div class="note">Striped bars are past 100%. The marker is full capacity. I used this view to reorganize the queue when urgent requests came in.</div></div>
+<div class="card"><h3>Projects <em>${f.length} of ${ps.length} shown</em></h3>${tbl('pj',['Project','Line','Designer','Stage','Late','Budget used'],f.map(p=>({key:p.id,_:[p.n,LINES[p.line],DES[p.des],p.stage,p.late,p.spent/p.bud],c:[p.n,LINES[p.line],DES[p.des],STAGES[p.stage],p.late?`<span class="tag k">${p.late} d</span>`:'·',mini(p.spent/p.bud,1.2,p.spent>p.bud?'st':'')+' <span class="num">'+Math.round(p.spent/p.bud*100)+'%</span>']})))}</div>`}};
+P[2]=()=>{const act=active(),late=lateOnes(),dl=projs().filter(p=>p.stage===4),ontime=dl.filter(p=>p.late===0).length;
+const f=act.filter(p=>S.cause===null||p.cause===CAUSES[S.cause]);const avg=late.length?late.reduce((a,p)=>a+p.late,0)/late.length:0;
+const lb=[...late].sort((a,b)=>b.late-a.late).map(p=>({l:p.n,key:p.id,v:p.late,t:p.late+' d',cls:p.late>=9?'st':'',sel:S.psel===p.id,dim:S.cause!==null&&p.cause!==CAUSES[S.cause],tip:`${p.n}: ${p.late} days late, ${p.cause}, ${DES[p.des]}`}));
+const cb=CAUSES.map((c,i)=>({l:c,key:i,v:late.filter(p=>p.cause===c).length,sel:S.cause===i,dim:S.cause!==null&&S.cause!==i})).map(x=>({...x,t:x.v+' projects',tip:'Click to filter the table and the bars by '+x.l}));
+const rw=[...act].sort((a,b)=>b.rounds-a.rounds).slice(0,6).map(p=>({l:p.n,key:p.id,v:p.rounds,t:p.rounds+' rounds',cls:p.rounds>=3?'st':'g',tip:p.n+': '+p.rounds+' rounds of changes'}));
+return{grid:'grid-template-columns:1.1fr 1fr;grid-template-rows:auto 1fr 1fr',html:
+`<div class="kp" style="grid-column:1/3;grid-template-columns:repeat(4,1fr)">${kpi('Late projects',late.length,'of '+act.length+' active',{alert:late.length>3})}${kpi('Average delay',avg.toFixed(1)+' d',late.length?'worst: '+Math.max(...late.map(p=>p.late))+' days':'none late')}${kpi('Rounds of changes',act.reduce((a,p)=>a+p.rounds,0),'on active projects')}${kpi('Delivered on time',ontime+' of '+dl.length,'projects already closed')}</div>
+<div class="card" style="grid-row:2/4"><h3>Days late by project <em>striped: 9 days or more</em></h3>${bars(lb,{a:'psel',max:14,lw:150,vw:50})}</div>
+<div class="card"><h3>Why they are late <em>click a cause to filter</em></h3>${bars(cb,{a:'cause',max:3,lw:150,vw:80})}</div>
+<div class="card"><h3>Active projects <em>${f.length} shown</em></h3>${tbl('dl',['Project','Designer','Stage','Late','Cause','Rounds'],f.map(p=>({key:p.id,sel:S.psel===p.id,_:[p.n,DES[p.des],p.stage,p.late,p.cause||'',p.rounds],c:[p.n,DES[p.des],STAGES[p.stage],p.late?`<span class="tag k">${p.late} d</span>`:'·',p.cause||'·','<span class="num">'+p.rounds+'</span>']})),{a:'psel'})}<div class="note">I gave each designer feedback on deadlines and quality.</div></div>`}};
+P[3]=()=>{const f=ADS.filter(a=>inLine(a.line));const tsp=f.reduce((s,a)=>s+a.spend,0),tsl=f.reduce((s,a)=>s+a.sales,0);
+const W=520,H=300,pl=46,pb=34,x=v=>pl+(W-pl-16)*(v-1000)/6500,y=v=>12+(H-12-pb)*(1-v/7);
+let sc=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;flex:1;min-height:0"><rect x="${pl}" y="${y(7)}" width="${W-pl-16}" height="${y(4)-y(7)}" fill="#efefeb"/><text x="${pl+8}" y="27" font-size="11" fill="#6b6b67">4x or more per $1</text>`;
+[1000,2000,3000,4000,5000,6000,7000].forEach(v=>sc+=`<line x1="${x(v)}" x2="${x(v)}" y1="12" y2="${H-pb}" stroke="#e6e6e1"/><text x="${x(v)}" y="${H-pb+15}" font-size="11" text-anchor="middle" fill="#6b6b67">${usd(v)}</text>`);
+[0,2,4,6].forEach(v=>sc+=`<line x1="${pl}" x2="${W-16}" y1="${y(v)}" y2="${y(v)}" stroke="#e6e6e1"/><text x="${pl-6}" y="${y(v)+4}" font-size="11" text-anchor="end" fill="#6b6b67">${v}x</text>`);
+sc+=`<text x="${(W+pl)/2}" y="${H-3}" font-size="11" text-anchor="middle" fill="#3a3a38">ad spend</text><text x="12" y="${H/2}" font-size="11" text-anchor="middle" fill="#3a3a38" transform="rotate(-90 12 ${H/2})">sales per $1 of ads</text>`;
+f.forEach(a=>{const on=S.cmp.includes(a.id);sc+=`<circle cx="${x(a.spend)}" cy="${y(a.roas)}" r="${6+a.sales/2400}" fill="${on?'#0A0A0A':'#fff'}" stroke="#0A0A0A" stroke-width="2" style="cursor:pointer" data-a="cmp" data-v="${a.id}" data-tip="${a.c}, ad ${a.v}: ${usd(a.spend)} spent, ${usd(a.sales)} in sales, ${a.roas.toFixed(1)}x. Click to compare."/>`});sc+='</svg>';
+const best=(k,lo)=>{const v=S.cmp.map(i=>ADS[i][k]);return lo?Math.min(...v):Math.max(...v)};
+const cm=[0,1,2].map(n=>{const i=S.cmp[n];if(i==null)return `<div class="cm empty">Click an ad in the chart or the table<br>to compare up to three side by side.</div>`;const a=ADS[i],m=S.cmp.length>1,cpo=a.spend/a.orders;const ln=(l,v,k,lo,val)=>`<div class="ln"><i>${l}</i><span class="num ${m&&k&&(val??a[k])===best(k,lo)?'best':''}">${v}</span></div>`;
+return `<div class="cm"><div style="display:flex;justify-content:space-between;align-items:baseline"><b class="nm">${a.c}, ad ${a.v}</b><span class="tag" style="cursor:pointer" data-a="cmp" data-v="${i}">remove</span></div><span style="font-size:11.5px;color:var(--g2)">${LINES[a.line]}</span>${ln('Ad spend',usd(a.spend))}${ln('Sales',usd(a.sales),'sales',0)}${ln('Orders',a.orders,'orders',0)}${ln('Cost per order','$'+cpo.toFixed(2))}${ln('Sales per $1 of ads',a.roas.toFixed(1)+'x','roas',0)}${ln('Click-through',a.ctr+'%','ctr',0)}</div>`}).join('');
+return{grid:'grid-template-columns:.85fr 1.45fr;grid-template-rows:auto 1.15fr 1fr',html:
+`<div class="kp" style="grid-column:1/3;grid-template-columns:repeat(4,1fr)">${kpi('Ad spend, compared ads',usd(tsp),f.length+' ad versions')}${kpi('Sales from those ads',usd(tsl),'orders: '+f.reduce((s,a)=>s+a.orders,0).toLocaleString())}${kpi('Sales per $1 of ads',(tsp?tsl/tsp:0).toFixed(1)+'x','all compared ads')}${kpi('Campaigns live',CAMPAIGNS_LIVE,'in the whole account')}</div>
+<div class="card"><h3>Spend vs. return <em>bubble size: sales</em></h3>${sc}</div>
+<div class="card"><h3>All ad versions <em>click a row to compare · click a header to sort</em></h3>${tbl('ad',['Campaign','Ad','Spend','Sales','Orders','Per $1','Click'],f.map(a=>({key:a.id,sel:S.cmp.includes(a.id),_:[a.c,a.v,a.spend,a.sales,a.orders,a.roas,a.ctr],c:[a.c,a.v,'<span class="num">'+usd(a.spend)+'</span>','<span class="num">'+usd(a.sales)+'</span>','<span class="num">'+a.orders+'</span>',mini(a.roas,7,a.roas<3?'st':'')+' <span class="num">'+a.roas.toFixed(1)+'x</span>','<span class="num">'+a.ctr+'%</span>']})),{a:'cmp'})}</div>
+<div class="card" style="grid-column:1/3"><h3>Side by side <em>the best value in each line is marked · marketing sent the data, I tracked it and took it to the owner</em></h3><div class="cmp">${cm}</div></div>`}};
+P[4]=()=>{const ps=projs(),tb=ps.reduce((a,p)=>a+p.bud,0),ts=ps.reduce((a,p)=>a+p.spent,0),ov=ps.filter(p=>p.spent>p.bud);
+const srt=[...ps].sort((a,b)=>b.spent/b.bud-a.spent/a.bud),mx=Math.max(...ps.map(p=>Math.max(p.bud,p.spent)));
+const bl=srt.map(p=>({l:p.n,key:p.id,v:p.spent,t:usd(p.spent),mark:p.bud,cls:p.spent>p.bud?'st':p.stage<2?'g':'',sel:S.psel===p.id,tip:`${p.n}: ${usd(p.spent)} spent of ${usd(p.bud)} (${Math.round(p.spent/p.bud*100)}%), ${STAGES[p.stage]}`}));
+const sb=SUP.map((s,k)=>({l:s,key:k,v:ps.filter(p=>p.sup===k).reduce((a,p)=>a+p.spent,0)})).filter(x=>x.v).sort((a,b)=>b.v-a.v).map(x=>({...x,t:usd(x.v),cls:'g',tip:x.l+': spent on '+ps.filter(p=>p.sup===x.key).length+' projects'}));
+const rr=[...ps].sort((a,b)=>b.rounds-a.rounds).slice(0,6).map(p=>({l:p.n,key:p.id,v:p.rounds,t:p.rounds+' rounds',cls:p.rounds>=3?'st':'g',tip:p.n+': '+p.rounds+' rounds of changes'}));
+return{grid:'grid-template-columns:1.35fr 1fr;grid-template-rows:auto 1fr 1fr',html:
+`<div class="kp" style="grid-column:1/3;grid-template-columns:repeat(4,1fr)">${kpi('Budget, all projects',usd(tb),ps.length+' projects')}${kpi('Spent so far',usd(ts),Math.round(ts/tb*100)+'% of budget')}${kpi('Over budget',ov.length,ov.length?usd(ov.reduce((a,p)=>a+p.spent-p.bud,0))+' above plan':'none',{alert:ov.length>3})}${kpi('Rounds of changes',ps.reduce((a,p)=>a+p.rounds,0),'across all projects')}</div>
+<div class="card" style="grid-row:2/4"><h3>Spent vs. budget by project <em>marker: budget · striped: over · grey: early stage</em></h3>${bars(bl,{a:'psel',max:mx*1.02,lw:150,vw:60})}</div>
+<div class="card"><h3>Spent by supplier <em>across the projects shown</em></h3>${bars(sb,{lw:130,vw:60})}</div>
+<div class="card"><h3>Rework by project <em>striped: 3 rounds or more</em></h3>${bars(rr,{a:'psel',max:5,lw:150,vw:70})}<div class="note">I tracked cost, time, rework, delay and supplier cost for each project.</div></div>`}};
+/* ---------- render ---------- */
+function render(){
+$('#nav').innerHTML=`<div><div class="brand">Design ops view</div><h1>Clothing brand<br><span>design operations</span></h1></div>`+nav.map((n,i)=>`<div class="nv ${S.page===i?'on':''}" data-a="page" data-v="${i}"><div class="q">${i+1}. ${n.t}</div><div class="t">${n.q}</div><div class="k num">${n.k()}</div><div class="s">${n.s()}</div></div>`).join('')+`<div class="how">Every page answers one question from the owner. Click a card, a bar or a row to filter. Click again to clear.</div>`;
+$('#top').innerHTML=`<div><div class="kick">Page ${S.page+1} of 5 · ${nav[S.page].t}</div><h2>${nav[S.page].q}</h2></div><div class="slc"><div class="sl"><label>Product line</label><div class="chips"><div class="chip ${S.line===null?'on':''}" data-a="line" data-v="">All</div>${LINES.map((l,j)=>`<div class="chip ${S.line===j?'on':''}" data-a="line" data-v="${j}">${l}</div>`).join('')}</div></div><div class="sl"><label>Period</label><div class="chips">${[3,6,12].map(p=>`<div class="chip ${S.period===p?'on':''}" data-a="period" data-v="${p}">${p} mo</div>`).join('')}</div></div></div>`;
+const pg=P[S.page]();$('#page').style.cssText=pg.grid;$('#page').innerHTML=pg.html;history.replaceState(null,'','#'+(S.page+1))}
+const tog=(k,v)=>{S[k]=S[k]===v?null:v};
+document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!el||!el.dataset.a)return;const a=el.dataset.a,v=el.dataset.v;
+if(a==='page'){S.page=+v}else if(a==='line'){v===''?S.line=null:tog('line',+v)}else if(a==='period'){S.period=+v}else if(a==='stage'){tog('stage',+v)}else if(a==='des'){tog('des',+v)}else if(a==='psel'){tog('psel',+v)}else if(a==='cause'){tog('cause',+v)}
+else if(a==='cmp'){const i=+v,p=S.cmp.indexOf(i);if(p>=0)S.cmp.splice(p,1);else{if(S.cmp.length===3)S.cmp.shift();S.cmp.push(i)}}
+else if(a==='sort'){const[id,c]=v.split('|');const s=S.sort[id];S.sort[id]=s&&s.c===+c?{c:+c,d:!s.d}:{c:+c,d:false}}
+render()});
+const tip=$('#tip');document.addEventListener('mousemove',e=>{const el=e.target.closest('[data-tip]');if(el&&el.dataset.tip){tip.textContent=el.dataset.tip;tip.style.display='block';tip.style.left=Math.min(innerWidth-270,e.clientX+14)+'px';tip.style.top=(e.clientY+16)+'px'}else tip.style.display='none'});
+function fit(){const s=Math.min(innerWidth/1600,innerHeight/900),st=$('#stage');st.style.transform=`scale(${s})`;st.style.left=(innerWidth-1600*s)/2+'px';st.style.top=(innerHeight-900*s)/2+'px'}
+addEventListener('resize',fit);const h=+location.hash.slice(1);if(h>=1&&h<=5)S.page=h-1;fit();render();
+</script>
+</body>
+</html>
