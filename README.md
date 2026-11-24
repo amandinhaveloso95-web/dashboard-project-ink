@@ -5,4 +5,6 @@ Dashboards rebuilt from the structure of the ones I built for the owners of U.S.
 - **Owner view: clothing brand operations** (sales, projects, suppliers, cost, stock): https://amandinhaveloso95-web.github.io/dashboard-project-ink/
 - **Design operations view: clothing brand** (capacity, delays, ads, project cost): https://amandinhaveloso95-web.github.io/dashboard-project-ink/fivl/
 
+All dashboards in one page: https://amandinhaveloso95-web.github.io/dashboard-project-ink/portfolio/
+
 Amanda Moraes
