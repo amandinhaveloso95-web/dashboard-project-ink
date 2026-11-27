@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Acompanhamento do gabinete (dados fictícios)</title>
+<style>
+:root{--bg:#F5F5F3;--ink:#0A0A0A;--mut:#5c5c58;--line:#dcdcd6;--card:#fff;
+ --yel:#FFF1B8;--pink:#F8D7E0;--blue:#D3E6F5;--must:#E2B84A;--hi:var(--yel)}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.wrap{max-width:1040px;margin:0 auto;padding:14px 14px 90px}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+h1{font-size:22px;line-height:1.15;margin:0;letter-spacing:-.2px}
+.sub{color:var(--mut);font-size:14px;margin:3px 0 0}
+.pill{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--ink);border-radius:99px;padding:5px 12px;font-size:13px;font-weight:700;background:var(--hi);transition:background .3s}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ink)}
+nav{display:flex;gap:6px;margin:10px 0 14px;overflow-x:auto}
+nav button{flex:1;min-width:0;border:1px solid var(--ink);background:#fff;border-radius:10px;padding:11px 6px;font-weight:700;font-size:15px;white-space:nowrap;transition:background .15s}
+nav button:hover{background:var(--blue)}
+nav button[aria-selected=true]{background:var(--ink);color:#fff}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.chip{border:1px solid var(--ink);background:#fff;border-radius:99px;padding:8px 14px;font-size:14px;font-weight:600;transition:background .15s}
+.chip:hover{background:var(--pink)}
+.chip[aria-pressed=true]{background:var(--ink);color:#fff}
+.card{background:var(--card);border:1px solid var(--ink);border-radius:14px;padding:16px;margin-bottom:12px}
+h2{margin:0 0 4px;font-size:18px;line-height:1.2}
+.q{font-size:14px;color:var(--mut);margin:0 0 12px}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.kpi{background:#fff;border:1px solid var(--ink);border-radius:14px;padding:14px}
+.kpi b{display:block;font-size:38px;line-height:1;letter-spacing:-1px}
+.kpi span{font-size:14px;color:var(--mut)}
+.kpi.hot{background:var(--hi)}
+.item{display:grid;grid-template-columns:78px 1fr;gap:12px;padding:12px 0;border-top:1px solid var(--line);width:100%;text-align:left;background:none;border-left:0;border-right:0;border-bottom:0;transition:background .15s}
+.item:first-of-type{border-top:0}
+.item:hover,.item:focus-visible{background:var(--yel)}
+.days{border:1px solid var(--ink);border-radius:10px;text-align:center;padding:6px 2px;font-weight:700;font-size:24px;line-height:1}
+.days small{display:block;font-size:11px;font-weight:700;margin-top:3px}
+.days.r{background:var(--pink)}
+.t{font-weight:700;font-size:17px}.a{color:var(--mut);font-size:14px}
+.tag{display:inline-block;border:1px solid var(--ink);border-radius:99px;padding:1px 9px;font-size:12px;margin:5px 5px 0 0;background:#fff}
+.bar{display:grid;grid-template-columns:104px 1fr 30px;gap:8px;align-items:center;margin:10px 0;font-size:14px}
+.stack{display:flex;height:24px;gap:2px}
+.stack i{display:block;transition:filter .15s}
+.stack i:hover{filter:brightness(.9)}
+.sD{background:var(--ink)}.sA{background:var(--must)}.sS{background:#d9d9d3}
+.leg{display:flex;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--mut);margin-bottom:6px}
+.leg i{display:inline-block;width:11px;height:11px;margin-right:5px;vertical-align:-1px;border:1px solid var(--ink)}
+.row{display:grid;grid-template-columns:70px 1fr;gap:10px;padding:11px 0;border-top:1px solid var(--line);width:100%;text-align:left;background:none;border-left:0;border-right:0;border-bottom:0}
+.row:hover{background:var(--blue)}
+.row .d{color:var(--mut);font-size:14px}
+.st{font-size:12px;font-weight:700;border:1px solid var(--ink);border-radius:99px;padding:1px 9px;white-space:nowrap;background:#fff}
+.st.D{background:var(--ink);color:#fff}.st.A{background:var(--must)}.st.P{background:var(--blue)}
+.sheet{width:100%;border-collapse:collapse;font-size:13px}
+.sheet th{background:var(--ink);color:#fff;text-align:left;padding:7px 8px;font-weight:700}
+.sheet td{padding:7px 8px;border-bottom:1px solid var(--line)}
+.sheet tr.new td{background:var(--yel);font-weight:700}
+.btn{border:1px solid var(--ink);background:var(--ink);color:#fff;border-radius:10px;padding:12px 16px;font-weight:700;font-size:15px;width:100%}
+.btn:hover{background:#333}
+.sug{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.sug button{border:1px solid var(--ink);background:#fff;border-radius:12px;padding:12px;text-align:left;font-size:15px;font-weight:600;transition:background .15s}
+.sug button:hover{background:var(--yel)}
+.ans{border:1px solid var(--ink);border-radius:14px;padding:14px;background:var(--blue);font-size:16px}
+.ans ul{margin:6px 0 0 18px;padding:0}
+.sheetwrap{overflow-x:auto;margin:10px 0}
+#ficha{position:fixed;inset:auto 0 0 0;max-width:620px;margin:0 auto;background:#fff;border:1px solid var(--ink);border-radius:16px 16px 0 0;padding:16px;transform:translateY(110%);transition:transform .2s;z-index:9;max-height:70vh;overflow:auto}
+#ficha.open{transform:none;box-shadow:0 -10px 30px rgba(0,0,0,.18)}
+#ficha .x{float:right;border:1px solid var(--ink);background:#fff;border-radius:99px;width:36px;height:36px;font-size:18px}
+.foot{font-size:13px;color:var(--mut);margin-top:16px;border-top:1px solid var(--line);padding-top:10px}
+.hide{display:none!important}
+@media(max-width:759px){
+ .wrap{padding-top:10px}header{margin-bottom:6px}h1{font-size:20px}header .sub{display:none}
+ .pill{font-size:12px;padding:4px 10px}nav{margin:6px 0 8px}nav button{padding:9px 2px;font-size:14px}
+ .chips{flex-wrap:nowrap;overflow-x:auto;margin-bottom:10px}.chip{white-space:nowrap;padding:7px 12px;font-size:14px}
+ .kpi b{font-size:34px}
+}
+@media(min-width:760px){.kpis{grid-template-columns:repeat(4,1fr)}h1{font-size:28px}.two{display:grid;grid-template-columns:1.2fr 1fr;gap:12px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+ <div><h1>Acompanhamento do gabinete</h1><p class="sub">O que foi feito, o que teve retorno e o que precisa de resposta</p></div>
+ <span class="pill" id="pill"><span class="dot"></span><span id="pillT">Lido da planilha agora</span></span>
+</header>
+<nav role="tablist" aria-label="Seções">
+ <button role="tab" data-v="home" aria-selected="true">Início</button>
+ <button role="tab" data-v="dash" aria-selected="false">Painel</button>
+ <button role="tab" data-v="lista" aria-selected="false">Lista</button>
+ <button role="tab" data-v="sheet" aria-selected="false">Planilha</button>
+ <button role="tab" data-v="ia" aria-selected="false">IA</button>
+</nav>
+<div class="chips" role="group" aria-label="Pessoa" id="chips">
+ <button class="chip" data-p="" aria-pressed="true">Todos</button>
+ <button class="chip" data-p="Vice-diretor" aria-pressed="false">Vice-diretor</button>
+ <button class="chip" data-p="Assessora 1" aria-pressed="false">Assessora 1</button>
+ <button class="chip" data-p="Assessora 2" aria-pressed="false">Assessora 2</button>
+</div>
+
+<section id="v-home"></section>
+<section id="v-dash" class="hide"></section>
+<section id="v-lista" class="hide"></section>
+<section id="v-sheet" class="hide"></section>
+<section id="v-ia" class="hide"></section>
+
+<p class="foot">Dados fictícios. Não posso divulgar dados da empresa. A estrutura mostra o app que eu criei para acompanhar visitas, eventos e viagens de uma diretoria. · Amanda Moraes</p>
+</div>
+
+<aside id="ficha" aria-hidden="true"><button class="x" id="fx" aria-label="Fechar">×</button><div id="fb"></div></aside>
+
+<script>
+(()=>{
+const TODAY=new Date(2026,10,27), PRAZO=60;
+const P=['Vice-diretor','Assessora 1','Assessora 2'];
+const ST={D:'Desdobramento',A:'Em andamento',S:'Sem retorno',P:'Previsto'};
+const raw=[
+['2026-02-12','Visita','Sanofi','Parceria estratégica',[0],'D','Nova reunião em abril'],
+['2026-03-05','Kick-off','Thermo Fisher','Projeto de bioprocessos',[0,1,2],'D','Visita técnica e acordo assinado'],
+['2026-03-19','Viagem','Lyon (França)','Visita a parceiro',[0],'D','Kick-off em outubro'],
+['2026-04-02','Visita','GSK','Visita técnica',[0],'S',''],
+['2026-04-16','Workshop','Workshop de tecnologia','Evento do setor',[1],'S',''],
+['2026-05-07','Visita','Takeda','Alinhamento institucional',[0],'A','Visita recente, sem retorno ainda'],
+['2026-05-21','Reunião','Plano de projetos 2026','Reunião estratégica',[0,1],'D','Reuniões mensais'],
+['2026-06-04','Visita','Fundação Gates','Parceria de pesquisa',[0,1],'D','Segunda visita em julho'],
+['2026-06-18','Viagem','San Diego (EUA)','Congresso do setor',[0],'D','Visita à Thermo Fisher'],
+['2026-07-02','Visita','CanSinoBIO','Parceria e pipeline',[1,2],'D','Reunião interna em setembro'],
+['2026-07-16','Fórum','Fórum de iniciativas','Avaliação do portfólio',[0,1,2],'S',''],
+['2026-08-06','Visita','BNDES','Visita institucional',[0],'A','Aguardando proposta'],
+['2026-08-20','Visita','Instituto Pasteur','Visita técnica',[2],'D','Segunda visita em novembro'],
+['2026-09-03','Viagem','Brasília','Reunião no ministério',[0],'S',''],
+['2026-09-17','Visita','Biofarma','Visita institucional',[0,2],'A','Aguardando agenda'],
+['2026-10-01','Workshop','Workshop de terapias','Evento do setor',[2],'S',''],
+['2026-10-15','Kick-off','Projeto com consórcio','Início do projeto',[0,1,2],'D','Reuniões quinzenais'],
+['2026-10-29','Visita','Sinovac','Parceria tecnológica',[2],'A','Visita recente'],
+['2026-11-12','Visita','Serum Institute','Potencial colaboração',[0],'A','Visita recente'],
+['2026-11-20','Viagem','Londres (Reino Unido)','Simpósio internacional',[2],'P','Em curso']
+];
+const mk=a=>{const[y,m,d]=a[0].split('-').map(Number);return{d:new Date(y,m-1,d),tipo:a[1],nome:a[2],ass:a[3],pes:a[4].map(i=>P[i]),st:a[5],dep:a[6]}};
+let rows=raw.map(mk), who='', view='home', added=false;
+const $=s=>document.querySelector(s);
+const fd=d=>String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0');
+const dias=r=>Math.floor((TODAY-r.d)/864e5);
+const flt=()=>rows.filter(r=>!who||r.pes.includes(who));
+const open=r=>r.st==='A'||r.st==='S';
+const over=r=>open(r)&&dias(r)>=PRAZO;
+const cnt=(a,k)=>a.filter(r=>r.st===k).length;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function home(){
+ const a=flt(), o=a.filter(over).sort((x,y)=>dias(y)-dias(x)), top=o.slice(0,4);
+ return `<div class="kpis"><div class="kpi hot"><b>${o.length}</b><span>sem retorno há mais de ${PRAZO} dias</span></div>
+ <div class="kpi"><b>${a.length}</b><span>atividades no ano</span></div></div>
+ <div class="card"><h2>O que precisa de resposta?</h2><p class="q">Toque para ver a ficha do parceiro</p>
+ ${top.map(r=>`<button class="item" data-f="${rows.indexOf(r)}"><div class="days r">${dias(r)}<small>dias</small></div><div><div class="t">${esc(r.nome)}</div><div class="a">${esc(r.ass)}</div><span class="tag">${r.tipo}</span><span class="st ${r.st}">${ST[r.st]}</span></div></button>`).join('')||'<p class="a">Nada pendente.</p>'}
+ </div>`;
+}
+function dash(){
+ const a=flt(), n=a.length, D=cnt(a,'D'), A=cnt(a,'A'), S=cnt(a,'S'), base=D+A+S;
+ const tipos=['Visita','Kick-off','Viagem','Workshop','Reunião','Fórum'];
+ const bars=tipos.map(t=>{const x=a.filter(r=>r.tipo===t&&r.st!=='P');const d=cnt(x,'D'),e=cnt(x,'A'),s=cnt(x,'S'),tt=d+e+s;if(!tt)return '';
+  const seg=(v,c,l)=>v?`<i class="${c}" style="flex:${v}" title="${l}: ${v}"></i>`:'';
+  return `<div class="bar"><span>${t}</span><div class="stack">${seg(d,'sD','Desdobramento')}${seg(e,'sA','Em andamento')}${seg(s,'sS','Sem retorno')}</div><b>${tt}</b></div>`}).join('');
+ return `<div class="kpis"><div class="kpi"><b>${n}</b><span>atividades</span></div><div class="kpi hot"><b>${base?Math.round(D/base*100):0}%</b><span>tiveram desdobramento</span></div>
+ <div class="kpi"><b>${A}</b><span>em andamento</span></div><div class="kpi"><b>${S}</b><span>sem retorno</span></div></div>
+ <div class="card"><h2>Teve desdobramento?</h2><p class="q">Por tipo de atividade</p>
+ <div class="leg"><span><i class="sD"></i>Desdobramento</span><span><i class="sA"></i>Em andamento</span><span><i class="sS"></i>Sem retorno</span></div>${bars}</div>`;
+}
+function lista(){
+ const a=flt().slice().sort((x,y)=>y.d-x.d);
+ return `<div class="card"><h2>Todas as atividades</h2><p class="q">${a.length} registros. Toque para ver a ficha.</p>
+ ${a.map(r=>`<button class="row" data-f="${rows.indexOf(r)}"><span class="d">${fd(r.d)}</span><span><b>${esc(r.nome)}</b><br><span class="a">${esc(r.ass)}</span><br><span class="tag">${r.tipo}</span><span class="st ${r.st}">${ST[r.st]}</span></span></button>`).join('')}</div>`;
+}
+function sheet(){
+ const last=rows.slice(-4);
+ return `<div class="card"><h2>A planilha é a única entrada</h2><p class="q">Quem alimenta só preenche uma linha. O app lê o resto.</p>
+ <div class="sheetwrap"><table class="sheet"><thead><tr><th>Data</th><th>Evento</th><th>Parceiro</th><th>Status</th></tr></thead><tbody>
+ ${last.map((r,i)=>`<tr class="${added&&i===last.length-1?'new':''}"><td>${fd(r.d)}</td><td>${r.tipo}</td><td>${esc(r.nome)}</td><td>${ST[r.st]}</td></tr>`).join('')}</tbody></table></div>
+ ${added?'<p class="a"><b>Linha adicionada.</b> O app já contou a atividade.</p>':'<button class="btn" id="add">Adicionar uma linha na planilha</button>'}</div>`;
+}
+function ia(){
+ return `<div class="card"><h2>Pergunte sobre as atividades</h2><p class="q">Respostas calculadas a partir da planilha</p>
+ <div class="sug"><button data-q="1">O que está sem retorno há mais de ${PRAZO} dias?</button><button data-q="2">Quantas visitas já fizemos a empresas?</button><button data-q="3">O que a Assessora 2 fez este ano?</button></div><div id="ans"></div></div>`;
+}
+function answer(q){
+ const a=rows;let h='';
+ if(q==='1'){const o=a.filter(over).sort((x,y)=>dias(y)-dias(x));h=`<b>${o.length} atividades pedem retorno.</b><ul>${o.slice(0,4).map(r=>`<li>${esc(r.nome)}: ${dias(r)} dias</li>`).join('')}</ul>Sugestão: começar pelas 3 mais antigas.`}
+ if(q==='2'){const v=a.filter(r=>r.tipo==='Visita');h=`<b>${v.length} visitas</b> no ano, ${cnt(v,'D')} com desdobramento e ${cnt(v,'A')+cnt(v,'S')} ainda sem fechar.`}
+ if(q==='3'){const x=a.filter(r=>r.pes.includes('Assessora 2'));h=`<b>${x.length} atividades</b>: ${x.filter(r=>r.tipo==='Visita').length} visitas, ${x.filter(r=>r.tipo==='Viagem').length} viagens e ${x.filter(r=>r.tipo==='Workshop').length} workshops.`}
+ $('#ans').innerHTML=`<div class="ans">${h}</div>`;
+}
+function ficha(i){
+ const r=rows[i], mesmo=rows.filter(x=>x.nome===r.nome);
+ $('#fb').innerHTML=`<h2>${esc(r.nome)}</h2><p class="q">${esc(r.ass)} · ${fd(r.d)}</p>
+ <span class="tag">${r.tipo}</span><span class="st ${r.st}">${ST[r.st]}</span>
+ <p><b>Quem participou:</b> ${r.pes.join(', ')}</p>
+ <p><b>O que veio depois:</b> ${esc(r.dep)||'Nada registrado ainda.'}</p>
+ ${open(r)?`<p class="ans">Sem retorno há <b>${dias(r)} dias</b>. Vale cobrar.</p>`:''}
+ ${mesmo.length>1?`<p class="a">${mesmo.length} registros com este parceiro.</p>`:''}`;
+ $('#ficha').classList.add('open');$('#ficha').setAttribute('aria-hidden','false');
+}
+function render(){
+ $('#v-home').innerHTML=home();$('#v-dash').innerHTML=dash();$('#v-lista').innerHTML=lista();$('#v-sheet').innerHTML=sheet();$('#v-ia').innerHTML=ia();
+ ['home','dash','lista','sheet','ia'].forEach(v=>$('#v-'+v).classList.toggle('hide',v!==view));
+ document.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===view));
+ document.querySelectorAll('#chips .chip').forEach(b=>b.setAttribute('aria-pressed',b.dataset.p===who));
+ $('#chips').classList.toggle('hide',view==='sheet'||view==='ia');
+}
+document.addEventListener('click',e=>{
+ const t=e.target.closest('button');if(!t)return;
+ if(t.dataset.v){view=t.dataset.v;$('#ficha').classList.remove('open');render();window.scrollTo(0,0)}
+ else if(t.dataset.p!==undefined&&t.classList.contains('chip')){who=t.dataset.p;render()}
+ else if(t.dataset.f){ficha(+t.dataset.f)}
+ else if(t.id==='fx'){$('#ficha').classList.remove('open');$('#ficha').setAttribute('aria-hidden','true')}
+ else if(t.id==='add'){rows.push({d:new Date(2026,10,26),tipo:'Visita',nome:'Merck',ass:'Parceria estratégica',pes:['Vice-diretor'],st:'A',dep:''});added=true;$('#pillT').textContent='Planilha mudou, app atualizado';render()}
+ else if(t.dataset.q){answer(t.dataset.q)}
+});
+render();
+})();
+</script>
+</body>
+</html>
